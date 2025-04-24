@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { useAuth } from "../../context/auth/AuthContext";
+import NavBar from "../navbar/NavBar";
+import SideBar from "../sidebar/SideBar";
 
 const PrivateRoute = ({ roles }: { roles: string[] }) => {
   const navigate = useNavigate();
@@ -24,7 +26,14 @@ const PrivateRoute = ({ roles }: { roles: string[] }) => {
 
   if (!user || !roles.includes(user.role)) return null;
 
-  return <Outlet />;
+  return (
+    <div className="flex h-screen">
+      <SideBar />
+      <div className="flex-1 overflow-auto">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default PrivateRoute;

@@ -4,4 +4,6 @@ export interface UserType {
   email: string;
   username: string;
   role: string;
+  enthusiast_level: string;
+  twitter_account?: string;
 }

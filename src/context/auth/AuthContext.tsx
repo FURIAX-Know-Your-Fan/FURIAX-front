@@ -35,11 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           password,
         }
       );
-
-      console.log(response.data);
-
       setUser(response.data.user);
-
       addToast({
         title: "Sucesso",
         description: response.data.message,
@@ -73,7 +69,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           `${API_URL}/user/auth/refresh`
         );
         setUser(response.data.user);
-      } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
         console.log(err.response?.data);
       } finally {
         setLoading(false);

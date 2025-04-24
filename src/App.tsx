@@ -4,6 +4,7 @@ import Register from "./pages/auth/register/Register";
 import VincularTwitter from "./pages/auth/register/twitter/VincularTwitter";
 import Loading from "./pages/loading/Loading";
 import PrivateRoute from "./components/private_route/PrivateRoute";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 
         {/* Rotas protegidas */}
         <Route element={<PrivateRoute roles={["user"]} />}>
-          <Route path="/home" element={<>home</>} />
+          <Route path="/home" element={<Home />} />
         </Route>
       </Routes>
     </>
