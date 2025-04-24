@@ -1,4 +1,5 @@
 import {
+  addToast,
   Button,
   Card,
   CardBody,
@@ -9,10 +10,34 @@ import {
 } from "@heroui/react";
 import furia_logo from "../../../assets/furia-logo.svg";
 import { useNavigate } from "react-router";
-import { FaXTwitter } from "react-icons/fa6";
+import { useAuth } from "../../../context/auth/AuthContext";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (email.trim() === "" || password.trim() === "") {
+      addToast({
+        title: "Atenção",
+        description: "Preencha todos os campos",
+        color: "warning",
+      });
+      return;
+    }
+    setLoading(true);
+    await login(email, password);
+    setLoading(false);
+
+    navigate("/home");
+  };
+
   return (
     <div className="flex items-center justify-center h-full">
       <Card className="w-96">
@@ -23,10 +48,23 @@ const Login = () => {
         <Divider />
 
         <CardBody className="flex flex-col">
-          <form className="flex flex-col gap-6">
-            <Input label="Email" placeholder="Digite seu email..." />
-            <Input label="Senha" placeholder="Digite sua senha..." />
-            <Button color="primary">Entrar</Button>
+          <form onSubmit={handleLogin} className="flex flex-col gap-6">
+            <Input
+              required
+              errorMessage="Preencha seu email"
+              onChange={(e) => setEmail(e.target.value)}
+              label="Email"
+            />
+            <Input
+              required
+              errorMessage="Preencha sua senha"
+              onChange={(e) => setPassword(e.target.value)}
+              label="Senha"
+              type="password"
+            />
+            <Button isLoading={loading} type="submit" color="primary">
+              Entrar
+            </Button>
           </form>
         </CardBody>
 

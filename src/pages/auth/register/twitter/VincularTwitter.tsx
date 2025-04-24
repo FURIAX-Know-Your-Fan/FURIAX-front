@@ -31,7 +31,7 @@ const VincularTwitter = () => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { id, name, email } = jwtDecode(token as string) as any;
+  const { name } = jwtDecode(token as string) as any;
 
   const handleAuthorize = async (e: React.FormEvent) => {
     e.preventDefault();
