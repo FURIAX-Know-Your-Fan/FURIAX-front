@@ -1,5 +1,5 @@
 import { FaHome, FaUser } from "react-icons/fa";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import furia_logo from "../../assets/furia-logo.png";
 import { Avatar, Button, Tooltip } from "@heroui/react";
 import { IoLogOut } from "react-icons/io5";
@@ -10,6 +10,7 @@ import { IoIosWarning } from "react-icons/io";
 const SideBar = () => {
   const location = useLocation();
   const { logout, user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="h-screen w-64 bg-zinc-900 text-white shadow-lg p-4 flex flex-col">
@@ -38,6 +39,7 @@ const SideBar = () => {
         </div>
 
         <Button
+          onPress={() => navigate("/home")}
           className={`font-bold ${
             location.pathname === "/home" ? "bg-primary" : ""
           }`}
@@ -47,8 +49,9 @@ const SideBar = () => {
         </Button>
 
         <Button
+          onPress={() => navigate("/profile")}
           className={`font-bold ${
-            location.pathname === "/perfil" ? "bg-primary" : ""
+            location.pathname === "/profile" ? "bg-primary" : ""
           }`}
         >
           <FaUser />

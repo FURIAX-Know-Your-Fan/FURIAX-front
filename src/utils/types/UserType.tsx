@@ -6,4 +6,5 @@ export interface UserType {
   role: string;
   enthusiast_level: string;
   twitter_account?: string;
+  description?: string;
 }
