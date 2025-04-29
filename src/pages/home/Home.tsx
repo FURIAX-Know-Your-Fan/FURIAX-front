@@ -7,6 +7,7 @@ import { useGetPosts } from "../../hooks/posts/useGetPosts";
 import { FaSignsPost } from "react-icons/fa6";
 import { PostType } from "../../utils/types/PostType";
 import PostCard from "../../components/post_card/PostCard";
+import { MdPostAdd } from "react-icons/md";
 
 const Home = () => {
   const [content, setContent] = useState<string>("");
@@ -57,7 +58,7 @@ const Home = () => {
     <div className="flex flex-col h-screen items-center gap-6 p-7">
       <div className=" justify-center bg-content1 w-[90%] p-4 rounded-lg gap-5">
         <h1 className="mb-2 font-bold text-xl flex items-center gap-2">
-          <FaSignsPost />
+          <MdPostAdd />
           Criar Post
         </h1>
         <form onSubmit={handleCreatePost} className="flex flex-col gap-2">
