@@ -1,5 +1,5 @@
-import { addToast, Avatar, Button, Spinner, Textarea } from "@heroui/react";
-import React, { useEffect, useState } from "react";
+import { addToast, Avatar, Button, Skeleton, Textarea } from "@heroui/react";
+import React, { useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import { useAuth } from "../../context/auth/AuthContext";
 import axiosInstance from "../../utils/axios/AxiosInstance";
@@ -55,7 +55,11 @@ const Home = () => {
   };
   return (
     <div className="flex flex-col h-screen items-center gap-6 p-7">
-      <div className="justify-center bg-content1 w-[90%] p-2 rounded-lg">
+      <div className=" justify-center bg-content1 w-[90%] p-4 rounded-lg gap-5">
+        <h1 className="mb-2 font-bold text-xl flex items-center gap-2">
+          <FaSignsPost />
+          Criar Post
+        </h1>
         <form onSubmit={handleCreatePost} className="flex flex-col gap-2">
           <div className="flex gap-4">
             <Avatar />
@@ -83,8 +87,28 @@ const Home = () => {
 
         <div className="mt-5 flex-1 w-full overflow-y-auto flex flex-col gap-4">
           {loading && (
-            <div className="flex flex-1 items-center justify-center">
-              <Spinner />
+            <div className="flex flex-col gap-4">
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
+              <Skeleton className="rounded-lg">
+                <div className="h-24 rounded-lg bg-default-300" />
+              </Skeleton>
             </div>
           )}
 
@@ -99,8 +123,8 @@ const Home = () => {
           {!loading &&
             posts.length > 0 &&
             posts.map((post: PostType) => (
-              <div key={post.id} className="flex-shrink-0">
-                <PostCard post={post} />
+              <div key={post._id} className="flex-shrink-0">
+                <PostCard post={post} refetch={refetch} />
               </div>
             ))}
         </div>

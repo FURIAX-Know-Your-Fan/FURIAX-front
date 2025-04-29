@@ -1,3 +1,5 @@
+import { CommentType } from "./CommentType";
+
 export interface PostType {
   _id: string;
   content: string;
@@ -13,8 +15,8 @@ export interface PostType {
     _id: string;
     name: string;
     email: string;
-    profile_picture: string;
   }>;
+  comments: CommentType[];
   likes_count: number;
   comments_count: number;
   createdAt: Date;

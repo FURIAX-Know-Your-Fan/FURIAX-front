@@ -6,6 +6,7 @@ import Loading from "./pages/loading/Loading";
 import PrivateRoute from "./components/private_route/PrivateRoute";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
+import PostDetail from "./pages/post_detail/PostDetail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route element={<PrivateRoute roles={["user"]} />}>
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/post/:post_id" element={<PostDetail />} />
         </Route>
       </Routes>
     </>
