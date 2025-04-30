@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { useAuth } from "../../context/auth/AuthContext";
-import NavBar from "../navbar/NavBar";
+// import NavBar from "../navbar/NavBar";
 import SideBar from "../sidebar/SideBar";
 
 const PrivateRoute = ({ roles }: { roles: string[] }) => {
