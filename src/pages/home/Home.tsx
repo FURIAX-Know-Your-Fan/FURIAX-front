@@ -1,5 +1,12 @@
-import { addToast, Avatar, Button, Skeleton, Textarea } from "@heroui/react";
-import React, { useState } from "react";
+import {
+  addToast,
+  Avatar,
+  Button,
+  Skeleton,
+  Textarea,
+  useDisclosure,
+} from "@heroui/react";
+import React, { useEffect, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import { useAuth } from "../../context/auth/AuthContext";
 import axiosInstance from "../../utils/axios/AxiosInstance";
@@ -8,13 +15,14 @@ import { FaSignsPost } from "react-icons/fa6";
 import { PostType } from "../../utils/types/PostType";
 import PostCard from "../../components/post_card/PostCard";
 import { MdPostAdd } from "react-icons/md";
+import InterestsModal from "../../components/modal/interests_modal/InterestsModal";
 
 const Home = () => {
   const [content, setContent] = useState<string>("");
   const { user } = useAuth();
   const [loading_create, setLoading] = useState<boolean>(false);
   const { posts, loading, refetch } = useGetPosts();
-  console.log(posts);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -54,6 +62,13 @@ const Home = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!user?.answered_questions) {
+      onOpen();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="flex flex-col h-screen items-center gap-6 p-7">
       <div className=" justify-center bg-content1 w-[90%] p-4 rounded-lg gap-5">
@@ -130,6 +145,7 @@ const Home = () => {
             ))}
         </div>
       </div>
+      <InterestsModal isOpen={isOpen} onOpenChange={onOpenChange} />
     </div>
   );
 };

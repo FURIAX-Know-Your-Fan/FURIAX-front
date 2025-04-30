@@ -24,6 +24,19 @@ const PostDetail = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const levelColors: { [key: string]: string } = {
+    "Não Medido": "bg-gray-400 text-content3",
+    Casual: "bg-yellow-400",
+    Engajado: "bg-green-400",
+    Hardcore: "bg-red-600",
+  };
+  const levelIcons: { [key: string]: string } = {
+    "Não Medido": "❓",
+    Casual: "😌",
+    Engajado: "😃",
+    Hardcore: "🤩",
+  };
+
   const handleGetPost = async () => {
     try {
       setLoading(true);
@@ -131,7 +144,16 @@ const PostDetail = () => {
 
           {!loading && (
             <div>
-              <h3 className="text-xl font-light">@{post?.user.username}</h3>
+              <div className="flex gap-2 items-center">
+                <h3 className="text-xl font-light">@{post?.user.username}</h3>
+                <div
+                  className={`rounded-full p-1 flex items-center ${
+                    levelColors[post?.user.enthusiast_level as string]
+                  }`}
+                >
+                  {levelIcons[post?.user.enthusiast_level as string]}{" "}
+                </div>
+              </div>
               <h3 className="text-sm font-light text-gray-500">
                 {post?.createdAt
                   ? new Date(post.createdAt).toLocaleDateString("pt-BR", {

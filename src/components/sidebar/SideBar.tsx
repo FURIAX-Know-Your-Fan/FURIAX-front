@@ -14,7 +14,11 @@ const SideBar = () => {
 
   return (
     <div className="h-screen w-64 bg-zinc-900 text-white shadow-lg p-4 flex flex-col">
-      <div className="flex flex-col items-center mb-6 gap-5">
+      <div
+        role="button"
+        onClick={() => navigate("/home")}
+        className="flex flex-col items-center mb-6 gap-5"
+      >
         <img src={furia_logo} className="h-16" />
         <h2 className="text-xl font-bold">FURIAX</h2>
       </div>

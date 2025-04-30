@@ -7,4 +7,6 @@ export interface UserType {
   enthusiast_level: string;
   twitter_account?: string;
   description?: string;
+  answered_questions?: boolean;
+  interests?: string[];
 }
