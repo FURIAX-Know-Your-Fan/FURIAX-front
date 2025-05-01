@@ -5,6 +5,8 @@ import {
   addToast,
   Button,
   Card,
+  CardBody,
+  CardHeader,
   Checkbox,
   Divider,
   Input,
@@ -104,10 +106,12 @@ const VincularTwitter = () => {
             transition={{ duration: 0.4 }}
             className="flex gap-5"
           >
-            <img src={furia_logo} className="w-24" />
-            <h2 className="font-bold text-xl">
-              Seja bem-vindo ao FURIAX, {name.split(" ")[0]}!
-            </h2>
+            <CardHeader>
+              <img src={furia_logo} className="w-24" />
+              <h2 className="font-bold text-xl">
+                Seja bem-vindo ao FURIAX, {name.split(" ")[0]}!
+              </h2>
+            </CardHeader>
           </motion.div>
 
           <Divider />
@@ -118,63 +122,65 @@ const VincularTwitter = () => {
             transition={{ delay: 0.2, duration: 0.4 }}
             className="flex flex-col items-center justify-center gap-5"
           >
-            <form onSubmit={handleAuthorize} className="flex flex-col gap-5">
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="font-bold"
-              >
-                Para continuar, você deve concordar em vincular sua conta
-                twitter
-              </motion.p>
+            <CardBody>
+              <form onSubmit={handleAuthorize} className="flex flex-col gap-5">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                  className="font-bold"
+                >
+                  Para continuar, você deve concordar em vincular sua conta
+                  twitter
+                </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
-              >
-                <Input
-                  onChange={(e) => setTwitter(e.target.value)}
-                  required
-                  label="Twitter"
-                  errorMessage="Informe seu @ do Twitter"
-                  startContent="@"
-                />
-              </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.3 }}
+                >
+                  <Input
+                    onChange={(e) => setTwitter(e.target.value)}
+                    required
+                    label="Twitter"
+                    errorMessage="Informe seu @ do Twitter"
+                    startContent="@"
+                  />
+                </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.3 }}
-              >
-                <Checkbox onChange={(e) => setAuthorize(e.target.checked)}>
-                  Estou ciente e concordo que o FURIAX poderá analisar minhas
-                  publicações públicas.
-                </Checkbox>
-              </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
+                >
+                  <Checkbox onChange={(e) => setAuthorize(e.target.checked)}>
+                    Estou ciente e concordo que o FURIAX poderá analisar minhas
+                    publicações públicas.
+                  </Checkbox>
+                </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.3 }}
-                className="text-sm text-gray-500 font-light"
-              >
-                Garantimos que o FURIAX não tem acesso a mensagens ou conteúdos
-                privados. Somente publicações públicas são consideradas para
-                análise.
-              </motion.p>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.3 }}
+                  className="text-sm text-gray-500 font-light"
+                >
+                  Garantimos que o FURIAX não tem acesso a mensagens ou
+                  conteúdos privados. Somente publicações públicas são
+                  consideradas para análise.
+                </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.3 }}
-              >
-                <Button type="submit" color="primary">
-                  Continuar
-                </Button>
-              </motion.div>
-            </form>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.3 }}
+                >
+                  <Button type="submit" color="primary">
+                    Continuar
+                  </Button>
+                </motion.div>
+              </form>
+            </CardBody>
           </motion.div>
         </Card>
       </motion.div>
