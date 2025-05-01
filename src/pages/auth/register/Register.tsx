@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../../utils/constants";
 import { validate_cpf } from "../../../utils/validations/ValidateCpf";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -30,6 +31,19 @@ const Register = () => {
   const [state, setState] = useState<string>("");
   const [complement, setComplement] = useState<string>("");
   const [number, setNumber] = useState<string>("");
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.1,
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    }),
+  };
 
   useEffect(() => {
     if (password.trim() === "" || confirmPassword.trim() === "") {
@@ -117,131 +131,196 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center h-full overflow-scroll">
-      <div className="flex items-center justify-center h-full">
-        <Card className="w-[600px] flex flex-col gap-5">
-          <CardHeader>
-            <img src={furia_logo} className="w-24" />
-            <h1 className="font-bold text-xl">FURIAX</h1>
-          </CardHeader>
-          <Divider />
-
-          <CardBody className="flex flex-col gap-4">
-            <h2 className="font-bold">Registrar</h2>
+      <motion.div
+        className="flex items-center justify-center h-full"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <motion.div className="w-[600px]" variants={fadeInUp} custom={0}>
+          <Card className="flex flex-col gap-5">
+            <CardHeader className="flex flex-col items-center gap-2">
+              <motion.img
+                src={furia_logo}
+                className="w-24"
+                variants={fadeInUp}
+                custom={0.2}
+              />
+              <motion.h1
+                className="font-bold text-xl"
+                variants={fadeInUp}
+                custom={0.3}
+              >
+                FURIAX
+              </motion.h1>
+            </CardHeader>
             <Divider />
-            <form onSubmit={handleRegister} className="flex flex-col gap-6">
-              <div className="flex  items-center justify-center gap-4">
-                <div className="flex flex-col gap-6 w-1/2">
-                  <h2>Dados Pessoais</h2>
-                  <Input
-                    required
-                    onChange={(e) => setName(e.target.value)}
-                    errorMessage="Campo obrigatório"
-                    label="Nome"
-                  />
-                  <Input
-                    required
-                    onChange={(e) => setUsername(e.target.value)}
-                    errorMessage="Campo obrigatório"
-                    label="Nome de Usuário"
-                  />
-                  <Input
-                    required
-                    errorMessage="Campo obrigatório"
-                    label="CPF"
-                    onChange={handleCpfChange}
-                    value={cpf}
-                  />
-                  <Input
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                    errorMessage="Campo obrigatório"
-                    label="Email"
-                  />
-                  <Input
-                    isInvalid={passwordError}
-                    required
-                    type="password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                    errorMessage="As senhas não coicidem"
-                    label="Senha"
-                  />
-                  <Input
-                    isInvalid={passwordError}
-                    required
-                    type="password"
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                    }}
-                    errorMessage="As senhas não coicidem"
-                    label="Confirmar Senha"
-                  />
-                </div>
 
-                <div className="flex flex-col gap-6 w-1/2">
-                  <h2>Endereço</h2>
-                  <Input
-                    label="CEP"
-                    required
-                    errorMessage="Campo obrigatório"
-                    onChange={(e) => setCep(e.target.value)}
-                  />
-
-                  <Input
-                    required
-                    onChange={(e) => setCity(e.target.value)}
-                    errorMessage="Campo obrigatório"
-                    label="Cidade"
-                  />
-
-                  <Input
-                    label="Rua"
-                    required
-                    errorMessage="Campo obrigatório"
-                    onChange={(e) => setStreet(e.target.value)}
-                  />
-
-                  <Input
-                    required
-                    onChange={(e) => setState(e.target.value)}
-                    errorMessage="Campo obrigatório"
-                    label="Estado"
-                  />
-
-                  <Input
-                    label="Complemento"
-                    required
-                    errorMessage="Campo obrigatório"
-                    onChange={(e) => setComplement(e.target.value)}
-                  />
-
-                  <Input
-                    label="Número"
-                    required
-                    errorMessage="Campo obrigatório"
-                    onChange={(e) => setNumber(e.target.value)}
-                  />
-                </div>
-              </div>
-              <Button type="submit" color="primary">
+            <CardBody className="flex flex-col gap-4">
+              <motion.h2 className="font-bold" variants={fadeInUp} custom={0.4}>
                 Registrar
-              </Button>
-            </form>
-          </CardBody>
+              </motion.h2>
+              <Divider />
+              <form onSubmit={handleRegister} className="flex flex-col gap-6">
+                <div className="flex items-center justify-center gap-4">
+                  {/* Coluna 1 */}
+                  <motion.div
+                    className="flex flex-col gap-6 w-1/2"
+                    variants={fadeInUp}
+                    custom={0.5}
+                  >
+                    <h2>Dados Pessoais</h2>
+                    <Input
+                      required
+                      onChange={(e) => setName(e.target.value)}
+                      errorMessage="Campo obrigatório"
+                      label="Nome"
+                    />
+                    <Input
+                      required
+                      onChange={(e) => setUsername(e.target.value)}
+                      errorMessage="Campo obrigatório"
+                      label="Nome de Usuário"
+                    />
+                    <Input
+                      required
+                      errorMessage="Campo obrigatório"
+                      label="CPF"
+                      onChange={handleCpfChange}
+                      value={cpf}
+                    />
+                    <Input
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                      errorMessage="Campo obrigatório"
+                      label="Email"
+                    />
 
-          <CardFooter className="flex flex-col items-center gap-5">
-            <h2 className="font-bold text-md">Já tem conta?</h2>
-            <Button
-              onPress={() => navigate("/login")}
-              color="secondary"
-              className="w-full"
-            >
-              Entrar
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
+                    {/* Campo com animação de erro */}
+                    <div>
+                      <Input
+                        isInvalid={passwordError}
+                        required
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        label="Senha"
+                      />
+                      <AnimatePresence>
+                        {passwordError && (
+                          <motion.p
+                            className="text-sm text-red-500 mt-1"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                          >
+                            As senhas não coincidem
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    <div>
+                      <Input
+                        isInvalid={passwordError}
+                        required
+                        type="password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        label="Confirmar Senha"
+                      />
+                      <AnimatePresence>
+                        {passwordError && (
+                          <motion.p
+                            className="text-sm text-red-500 mt-1"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                          >
+                            As senhas não coincidem
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+
+                  {/* Coluna 2 */}
+                  <motion.div
+                    className="flex flex-col gap-6 w-1/2"
+                    variants={fadeInUp}
+                    custom={0.6}
+                  >
+                    <h2>Endereço</h2>
+                    <Input
+                      label="CEP"
+                      required
+                      errorMessage="Campo obrigatório"
+                      onChange={(e) => setCep(e.target.value)}
+                    />
+                    <Input
+                      required
+                      onChange={(e) => setCity(e.target.value)}
+                      errorMessage="Campo obrigatório"
+                      label="Cidade"
+                    />
+                    <Input
+                      label="Rua"
+                      required
+                      errorMessage="Campo obrigatório"
+                      onChange={(e) => setStreet(e.target.value)}
+                    />
+                    <Input
+                      required
+                      onChange={(e) => setState(e.target.value)}
+                      errorMessage="Campo obrigatório"
+                      label="Estado"
+                    />
+                    <Input
+                      label="Complemento"
+                      required
+                      errorMessage="Campo obrigatório"
+                      onChange={(e) => setComplement(e.target.value)}
+                    />
+                    <Input
+                      label="Número"
+                      required
+                      errorMessage="Campo obrigatório"
+                      onChange={(e) => setNumber(e.target.value)}
+                    />
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  variants={fadeInUp}
+                  custom={0.7}
+                  className="flex flex-col"
+                >
+                  <Button type="submit" color="primary">
+                    Registrar
+                  </Button>
+                </motion.div>
+              </form>
+            </CardBody>
+
+            <CardFooter className="flex flex-col items-center gap-5">
+              <motion.h2
+                className="font-bold text-md"
+                variants={fadeInUp}
+                custom={0.8}
+              >
+                Já tem conta?
+              </motion.h2>
+              <motion.div variants={fadeInUp} custom={0.9} className="w-full">
+                <Button
+                  onPress={() => navigate("/login")}
+                  color="secondary"
+                  className="w-full"
+                >
+                  Entrar
+                </Button>
+              </motion.div>
+            </CardFooter>
+          </Card>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

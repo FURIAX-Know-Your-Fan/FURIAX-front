@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import PostDetail from "./pages/post_detail/PostDetail";
 import DocumentValidation from "./pages/auth/document-validation/DocumentValidation";
+import LinkAccounts from "./pages/link_accounts/LinkAccounts";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/post/:post_id" element={<PostDetail />} />
+          <Route path="/link/accounts" element={<LinkAccounts />} />
         </Route>
       </Routes>
     </>

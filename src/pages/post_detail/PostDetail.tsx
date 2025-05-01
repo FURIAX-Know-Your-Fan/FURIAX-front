@@ -16,6 +16,7 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { BsGraphUp } from "react-icons/bs";
 import { FaComment, FaRegComment } from "react-icons/fa";
 import CommentCard from "../../components/comment_card/CommentCard";
+import { motion } from "framer-motion";
 
 const PostDetail = () => {
   const { post_id } = useParams();
@@ -23,6 +24,19 @@ const PostDetail = () => {
   const [commentText, setCommentText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    }),
+  };
 
   const levelColors: { [key: string]: string } = {
     "Não Medido": "bg-gray-400 text-content3",
@@ -126,23 +140,34 @@ const PostDetail = () => {
   }, [post_id]);
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center p-5">
-      <div className="flex flex-col gap-6 bg-content1 p-2 rounded-lg w-[90%]">
-        <div className="flex items-center gap-2">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={fadeInUp}
+      className="flex flex-col gap-2 items-center justify-center p-5"
+    >
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+        className="flex flex-col gap-6 bg-content1 p-2 rounded-lg w-[90%]"
+      >
+        {/* Voltar */}
+        <motion.div variants={fadeInUp} className="flex items-center gap-2">
           <Button onPress={() => navigate(-1)}>
             <IoArrowBack />
             <h3 className="text-xl font-bold">Post</h3>
           </Button>
-        </div>
-        <div className="flex gap-2">
+        </motion.div>
+
+        {/* Avatar + Info */}
+        <motion.div variants={fadeInUp} className="flex gap-2">
           <Avatar size="lg" />
-          {loading && (
+          {loading ? (
             <div className="flex flex-col gap-2">
               <Spinner size="lg" />
             </div>
-          )}
-
-          {!loading && (
+          ) : (
             <div>
               <div className="flex gap-2 items-center">
                 <h3 className="text-xl font-light">@{post?.user.username}</h3>
@@ -151,7 +176,7 @@ const PostDetail = () => {
                     levelColors[post?.user.enthusiast_level as string]
                   }`}
                 >
-                  {levelIcons[post?.user.enthusiast_level as string]}{" "}
+                  {levelIcons[post?.user.enthusiast_level as string]}
                 </div>
               </div>
               <h3 className="text-sm font-light text-gray-500">
@@ -165,21 +190,23 @@ const PostDetail = () => {
               </h3>
             </div>
           )}
-        </div>
+        </motion.div>
 
-        <div className="p-2 break-words">
-          {loading && (
-            <div className="flex flex-col gap-2">
-              <Skeleton className="rounded-lg">
-                <div className="h-24 rounded-lg bg-default-300" />
-              </Skeleton>
-            </div>
+        {/* Conteúdo */}
+        <motion.div variants={fadeInUp} className="p-2 break-words">
+          {loading ? (
+            <Skeleton className="rounded-lg">
+              <div className="h-24 rounded-lg bg-default-300" />
+            </Skeleton>
+          ) : (
+            <p>{post?.content}</p>
           )}
-          {!loading && <p>{post?.content}</p>}
-        </div>
+        </motion.div>
 
         <Divider />
-        <div>
+
+        {/* Ações */}
+        <motion.div variants={fadeInUp}>
           <div className="flex gap-6 mt-2 items-center">
             <button
               onClick={handleLikePost}
@@ -188,23 +215,23 @@ const PostDetail = () => {
               <IoIosHeartEmpty />
               {loading ? <Spinner size="sm" /> : post?.likes_count} curtidas
             </button>
-
             <div className="flex items-center gap-2 text-md text-gray-500">
               <FaRegComment />
               {loading ? <Spinner size="sm" /> : post?.comments_count}{" "}
               comentários
             </div>
-
             <div className="flex items-center gap-2 text-md text-gray-500">
               <BsGraphUp />
               {loading ? <Spinner size="sm" /> : post?.visualizations}{" "}
               visualizações
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <Divider />
-        <div>
+
+        {/* Comentar */}
+        <motion.div variants={fadeInUp}>
           <form onSubmit={handleCommentPost} className="flex flex-col gap-4">
             <div className="flex gap-2">
               <Avatar />
@@ -218,31 +245,43 @@ const PostDetail = () => {
               Comentar
             </Button>
           </form>
-        </div>
+        </motion.div>
 
         <Divider />
-        <div className="flex flex-col gap-2">
+
+        {/* Comentários */}
+        <motion.div variants={fadeInUp} className="flex flex-col gap-2">
           <h3 className="text-lg font-bold">Comentários</h3>
           {loading && (
-            <div className="flex flex-col gap-2">
-              <Skeleton className="rounded-lg">
-                <div className="h-24 rounded-lg bg-default-300" />
-              </Skeleton>
-            </div>
+            <Skeleton className="rounded-lg">
+              <div className="h-24 rounded-lg bg-default-300" />
+            </Skeleton>
           )}
           {!loading &&
-            post?.comments.map((comment) => <CommentCard comment={comment} />)}
-
+            post?.comments.map((comment, index) => (
+              <motion.div
+                key={comment._id}
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                custom={index}
+              >
+                <CommentCard comment={comment} />
+              </motion.div>
+            ))}
           {post?.comments.length === 0 && (
-            <div className="flex flex-1 items-center justify-center">
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-1 justify-center"
+            >
               <h4 className="text-xl font-light text-gray-500">
                 Nenhum comentário encontrado
               </h4>
-            </div>
+            </motion.div>
           )}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 
