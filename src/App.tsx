@@ -9,11 +9,13 @@ import Profile from "./pages/profile/Profile";
 import PostDetail from "./pages/post_detail/PostDetail";
 import DocumentValidation from "./pages/auth/document-validation/DocumentValidation";
 import LinkAccounts from "./pages/link_accounts/LinkAccounts";
+import LandingPage from "./pages/landing_page/LandingPage";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/twitter/:token" element={<VincularTwitter />} />
