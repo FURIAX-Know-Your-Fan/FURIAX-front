@@ -26,7 +26,7 @@ const GameCard = ({
     return `${hours}h ${minutes}m`;
   };
   return (
-    <div className="bg-content2 p-2 rounded-xl flex flex-col items-center justify-center gap-2">
+    <div className="bg-content2 p-2 rounded-xl flex flex-col items-center justify-center gap-2 h-full">
       <Image src={image_url} />
       <h2 className="font-bold text-">{game.name}</h2>
       <p>Horas jogadas: {format_playtime(game.playtime_forever)}</p>
