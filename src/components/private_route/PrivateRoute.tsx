@@ -7,6 +7,7 @@ import SideBar from "../sidebar/SideBar";
 const PrivateRoute = ({ roles }: { roles: string[] }) => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const location = window.location.pathname;
 
   useEffect(() => {
     if (loading) return; // Não faz nada enquanto estiver carregando
@@ -28,10 +29,18 @@ const PrivateRoute = ({ roles }: { roles: string[] }) => {
 
   return (
     <div className="flex h-screen">
-      <SideBar />
-      <div className="flex-1 overflow-auto">
-        <Outlet />
-      </div>
+      {location.includes("/admin") ? (
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
+      ) : (
+        <>
+          <SideBar />
+          <div className="flex-1 overflow-auto">
+            <Outlet />
+          </div>
+        </>
+      )}
     </div>
   );
 };

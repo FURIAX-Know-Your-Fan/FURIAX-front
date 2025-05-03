@@ -7,6 +7,8 @@ import {
   CardHeader,
   Divider,
   Input,
+  Select,
+  SelectItem,
 } from "@heroui/react";
 import { useNavigate } from "react-router";
 import furia_logo from "../../../assets/furia-logo.svg";
@@ -15,6 +17,7 @@ import axios from "axios";
 import { API_URL } from "../../../utils/constants";
 import { validate_cpf } from "../../../utils/validations/ValidateCpf";
 import { motion, AnimatePresence } from "framer-motion";
+import estados_sigla from "../../../json/estados_sigla.json";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -128,6 +131,29 @@ const Register = () => {
     const formatted = formatCpf(e.target.value);
     setCpf(formatted);
   };
+
+  // useEffect(() => {
+  //   if (!cpf) return;
+
+  //   const timeout = setTimeout(() => {
+  //     if (!validate_cpf(cpf)) {
+  //       addToast({
+  //         title: "CPF inválido",
+  //         description: "Digite um CPF válido.",
+  //         color: "danger",
+  //       });
+  //     }
+  //     if (validate_cpf(cpf)) {
+  //       addToast({
+  //         title: "CPF válido",
+  //         description: "CPF válido.",
+  //         color: "success",
+  //       });
+  //     }
+  //   }, 800); // 800ms após o usuário parar de digitar
+
+  //   return () => clearTimeout(timeout); // limpa timeout se o CPF mudar antes do tempo
+  // }, [cpf]);
 
   return (
     <div className="flex items-center justify-center h-full overflow-scroll">
@@ -267,12 +293,23 @@ const Register = () => {
                       errorMessage="Campo obrigatório"
                       onChange={(e) => setStreet(e.target.value)}
                     />
-                    <Input
+                    {/* <Input
                       required
                       onChange={(e) => setState(e.target.value)}
                       errorMessage="Campo obrigatório"
                       label="Estado"
-                    />
+                    /> */}
+                    <Select
+                      label="Estado"
+                      required
+                      onChange={(e) => setState(e.target.value)}
+                    >
+                      {estados_sigla.UF.map((estado) => (
+                        <SelectItem key={estado.sigla}>
+                          {estado.nome}
+                        </SelectItem>
+                      ))}
+                    </Select>
                     <Input
                       label="Complemento"
                       required

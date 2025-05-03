@@ -10,6 +10,8 @@ import PostDetail from "./pages/post_detail/PostDetail";
 import DocumentValidation from "./pages/auth/document-validation/DocumentValidation";
 import LinkAccounts from "./pages/link_accounts/LinkAccounts";
 import LandingPage from "./pages/landing_page/LandingPage";
+import LoginAdmin from "./pages/auth/admin/LoginAdmin";
+import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           element={<DocumentValidation />}
         />
 
+        <Route path="/restricted/access" element={<LoginAdmin />} />
+
         <Route path="/loading-test" element={<Loading />} />
 
         {/* Rotas protegidas */}
@@ -33,6 +37,15 @@ function App() {
           <Route path="/post/:post_id" element={<PostDetail />} />
           <Route path="/link/accounts" element={<LinkAccounts />} />
         </Route>
+
+        <Route element={<PrivateRoute roles={["admin"]} />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Route>
+
+        {/* Error */}
+        <Route path="/unauthorized" element={<h1>Unauthorized</h1>} />
+        <Route path="/not-found" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </>
   );
